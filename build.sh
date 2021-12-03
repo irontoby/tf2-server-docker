@@ -1,1 +1,1 @@
-docker build -t suchipi/tf2-server .
+docker build -t irontoby/tf2-server .

@@ -1,10 +1,12 @@
 FROM debian:jessie
 
-MAINTAINER Suchipi Izumi "me@suchipi.com"
+MAINTAINER Tobias Johnson "irontoby@gmail.com"
 
 # SteamCMD and deps
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install lib32gcc1 wget
+RUN dpkg --add-architecture i386
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install lib32gcc1 wget lib32ncurses5 libstdc++6 libstdc++6:i386 libcurl4-gnutls-dev:i386 libtcmalloc-minimal4:i386
+
 RUN mkdir /steamcmd
 WORKDIR /steamcmd
 RUN wget http://media.steampowered.com/installer/steamcmd_linux.tar.gz
@@ -19,8 +21,6 @@ RUN /steamcmd/steamcmd.sh +login anonymous +force_install_dir /tf2 +app_update 2
 
 RUN mkdir -p /root/.steam/sdk32
 RUN cp /steamcmd/linux32/steamclient.so /root/.steam/sdk32/steamclient.so
-RUN dpkg --add-architecture i386
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install lib32ncurses5 lib32gcc1 libstdc++6 libstdc++6:i386 libcurl4-gnutls-dev:i386 libtcmalloc-minimal4:i386
 
 # Setup Container
 
